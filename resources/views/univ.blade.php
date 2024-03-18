@@ -84,7 +84,7 @@
                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                                                         data-bs-toggle="modal" data-bs-target="#upd{{ $datas->id }}">
                                                         <!--begin::Svg Icon Edit | path: icons/duotune/art/art005.svg-->
-                                                        <span class="svg-icon svg-icon-3">
+                                                        <span class="svg-icon svg-icon-3 svg-icon-warning">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none">
                                                                 <path opacity="0.3"
@@ -106,7 +106,7 @@
                                                             @method('delete')
                                                             <span
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="svg-icon svg-icon-3">
+                                                                class="svg-icon svg-icon-3 svg-icon-danger">
                                                                 {{-- {{ __('delete') }} --}}
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none">
@@ -172,14 +172,15 @@
                                                         <!--begin::Modal body-->
                                                         <div class="modal-body py-10 px-lg-17">
                                                             <div class="fv-row mb-9">
-                                                                <label class="fs-6 fw-bold required mb-2">Nama
+                                                                <label class="fs-6 fw-bold required mb-2 required">Nama
                                                                     univ</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-solid" id="1"
                                                                     name="nama_univ" value="{{ $datas->nama_univ }}">
                                                             </div>
                                                             <div class="fv-row mb-9" onclick="focusGetNegara">
-                                                                <label for="22" class="fs-6 fw-bold mb-2">Nama
+                                                                <label for="22"
+                                                                    class="fs-6 fw-bold mb-2 required">Nama
                                                                     negara</label>
                                                                 <select list="negara" type="select"
                                                                     class="form-control form-control-solid"
@@ -198,7 +199,7 @@
                                                                 class="fv-row
                                                                     mb-9">
                                                                 <label for="kota_select_edit{{ $datas->id }}"
-                                                                    class="fs-6 fw-bold mb-2">Nama kota</label>
+                                                                    class="fs-6 fw-bold mb-2 required">Nama kota</label>
                                                                 <select list="kota" type="select"
                                                                     id="kota_select_edit"
                                                                     class="form-control form-control-solid"
@@ -216,7 +217,7 @@
                                                             <div
                                                                 class="fv-row
                                                                     mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Alamat</label>
+                                                                <label class="fs-6 fw-bold mb-2 required">Alamat</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-solid" id="2"
                                                                     name="alamat_univ" value="{{ $datas->alamat_univ }}">
@@ -289,15 +290,23 @@
                     <!--begin::Modal body-->
                     <div class="modal-body py-10 px-lg-17">
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold required mb-2">Nama univ</label>
+                            <label class="fs-6 fw-bold required mb-2 required">Nama univ</label>
                             <input type="text" class="form-control form-control-solid" id="1"
                                 name="nama_univ" required>
                         </div>
-                        <div class="fv-row mb-9">
-                            <label for="n" class="fs-6 fw-bold mb-2">Nama Negara</label>
-                            <select list="negara" type="select" class="form-control form-control-solid"
+
+                        {{-- negara_select  --}}
+
+                        {{-- <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                <span class="required">Negara</span>
+                            </label>
+                            <select list="negara" data-control="select2" data-dropdown-parent="#kt_modal_add_univ"
                                 id="negara_select" name="nama_negara">
-                                <datalist id="negara">
+                                <datalist id="negara" data-placeholder="Silahkan pilih negara">
+                                    <option value="">
+                                        Silahkan pilih negara
+                                    </option>
                                     @foreach ($datanegara as $negara)
                                         <option value="{{ $negara->id }}">
                                             {{ $negara->nama_negara }}
@@ -307,13 +316,40 @@
                             </select>
                         </div>
                         <div class="fv-row mb-9">
-                            <label for="kota_select" class="fs-6 fw-bold mb-2">Nama Kota</label>
+                            <label for="kota_select" class="fs-6 fw-bold mb-2 required">Nama Kota</label>
                             <select list="negara" type="select" class="form-control form-control-solid"
                                 id="kota_select" name="nama_kota">
                             </select>
+                        </div> --}}
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                <span class="required">Negara</span>
+                            </label>
+                            <select list="negara" data-control="select2" data-dropdown-parent="#kt_modal_add_univ"
+                                id="negara_select" name="nama_negara">
+                                <datalist id="negara" data-placeholder="Silahkan pilih negara">
+                                    <option value="" disabled>
+                                        Silahkan pilih negara
+                                    </option>
+                                    @foreach ($datanegara as $negara)
+                                        <option value="{{ $negara->id }}">
+                                            {{ $negara->nama_negara }}
+                                        </option>
+                                    @endforeach
+                                </datalist>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label for="kota_select" class="fs-6 fw-bold mb-2 required">Nama Kota</label>
+                            <select name="nama_kota" aria-label="Pilih kota" data-control="select2"
+                                data-placeholder="Pilih negara terlebih dahulu" placeholder="Silahkan pilih kota"
+                                data-allow-clear="true" class="form-select form-select-solid fw-bolder" id="kota_select"
+                                data-dropdown-parent="#modal_add_univ">
+                                <!-- Kota options will be populated dynamically based on selected negara -->
+                            </select>
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Alamat</label>
+                            <label class="fs-6 fw-bold mb-2 required">Alamat</label>
                             <input type="text" class="form-control form-control-solid" id="4"
                                 name="alamat_univ" required>
                         </div>
@@ -340,13 +376,17 @@
 
 @section('script')
     <script>
+        $('.kota_select').select2()
         console.log('vanila javsascript best');
         const select_negara_create = document.querySelector('#negara_select');
         const kota_select_create = document.querySelector('#kota_select');
         const kota_select_edits = document.querySelectorAll('#kota_select_edit');
         const close_modals = document.querySelectorAll('#close-modal');
         const select_negara_edits = document.querySelectorAll('#negara_select_edit');
-        console.log(kota_select_edit);
+        let previousOption = {
+            negara: null
+        };
+
         async function changeOptionKota(e, whatForm, index = 0) {
             const id = e.target.options[e.target.selectedIndex].value;
             console.log(id);
@@ -360,24 +400,30 @@
                     if (res.kota.length === 0) {
                         e.target.options[previousOption.negara];
                     } else {
+                        // Clear previous options
+                        if (whatForm === 'create') {
+                            kota_select_create.options.length = 0;
+                        } else if (whatForm === 'edit') {
+                            kota_select_edits[index].options.length = 0;
+                        }
+
                         res.kota.map((kota) => {
                             if (whatForm === 'create') {
-                                kota_select_create.options.length = 0;
                                 const option = document.createElement('option');
                                 option.value = kota.id;
                                 option.text = kota.nama_kota;
                                 kota_select_create.add(option);
                             } else if (whatForm === 'edit') {
-                                kota_select_edit[index].options.length = 0;
                                 const option = document.createElement('option');
                                 option.value = kota.id;
                                 option.text = kota.nama_kota;
-                                kota_select_edit[index].add(option);
+                                kota_select_edits[index].add(option);
                             }
                         })
                     }
                 })
         }
+
         close_modals.forEach((modal, index) => {
             modal.addEventListener('click', function() {
                 console.log(previousOption);
@@ -388,69 +434,20 @@
                 }
             })
         })
-        // function closeModalDo(e){
-        //     if(previousOption.negara === null){
-        //         return true;
-        //     }else{
-
-        //     }
-        // }
 
         select_negara_edits.forEach((sele, index) => {
             sele.addEventListener('change', (e) => {
+                previousOption = {
+                    negara: e.target.selectedIndex
+                };
                 changeOptionKota(e, 'edit', index);
             });
         })
         select_negara_create.addEventListener('change', (e) => {
+            previousOption = {
+                negara: e.target.selectedIndex
+            };
             changeOptionKota(e, 'create');
         });
     </script>
 @endsection('script')
-
-{{-- @foreach ($data as $datas)
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#negara_select_edit{{ $datas->id }}').change(function() {
-                var negara_id = $(this).val();
-                // Send an Ajax request to fetch kota based on negara
-                $.ajax({
-                    url: '/get-kota-by-negara/' + negara_id,
-                    type: 'GET',
-                    success: function(response) {
-                        console.log(response);
-                        // Clear existing options
-                        $('#kota_select_edit{{ $datas->id }}').empty();
-                        // Populate kota options based on response
-                        $.each(response, function(key, value) {
-                            $('#kota_select_edit{{ $datas->id }}').append(
-                                '<option value="' + value.id + '">' + value.nama +
-                                '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-@endforeach
-<script>
-    $(document).ready(function() {
-        $('#negara_select').change(function() {
-            var negara_id = $(this).val();
-            // Send an Ajax request to fetch kota based on negara
-            $.ajax({
-                url: '/get-kota-by-negara/' + negara_id,
-                type: 'GET',
-                success: function(response) {
-                    // Clear existing options
-                    $('#kota_select').empty();
-                    // Populate kota options based on response
-                    $.each(response, function(key, value) {
-                        $('#kota_select').append('<option value="' + value.id +
-                            '">' + value.nama + '</option>');
-                    });
-                }
-            });
-        });
-    });
-</script> --}}

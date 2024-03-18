@@ -90,15 +90,16 @@
                                             <td>
                                                 {{-- <a href="#"
                                                     class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->gambar_negara }}</a> --}}
-                                                <img src="{{ asset('storage/' . $datas->gambar_kota) }}" alt="image">
+                                                <img src="{{ asset('storage/' . $datas->gambar_kota) }}" alt="image"
+                                                    style="object-fit: contain; max-width: 200px;" class="img-fluid border">
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-end flex-shrink-0">
                                                     <a href="#"
-                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                                        class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-1"
                                                         data-bs-toggle="modal" data-bs-target="#upd{{ $datas->id }}">
                                                         <!--begin::Svg Icon Edit | path: icons/duotune/art/art005.svg-->
-                                                        <span class="svg-icon svg-icon-3">
+                                                        <span class="svg-icon svg-icon-3 svg-icon-warning">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none">
                                                                 <path opacity="0.3"
@@ -112,7 +113,7 @@
                                                         <!--end::Svg Icon-->
                                                     </a>
                                                     <a href="#"
-                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                        class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                                                         <!--begin::Svg Icon Delete | path: icons/duotune/general/gen027.svg-->
                                                         <form method="post"
                                                             action="{{ route('kota.destroy', $datas->id) }}">
@@ -120,7 +121,7 @@
                                                             @method('delete')
                                                             <span :href="route('kota.destroy', $datas)"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="svg-icon svg-icon-3">
+                                                                class="svg-icon svg-icon-3 svg-icon-danger">
                                                                 {{-- {{ __('delete') }} --}}
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none">
@@ -186,14 +187,14 @@
                                                         <!--begin::Modal body-->
                                                         <div class="modal-body py-10 px-lg-17">
                                                             <div class="fv-row mb-9">
-                                                                <label class="fs-6 fw-bold required mb-2">Nama
+                                                                <label class="fs-6 fw-bold required mb-2 required">Nama
                                                                     kota</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-solid" id="1"
                                                                     name="nama_kota" value="{{ $datas->nama_kota }}">
                                                             </div>
                                                             <div class="fv-row mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Deskripsi</label>
+                                                                <label class="fs-6 fw-bold mb-2 required">Deskripsi</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-solid" id="2"
                                                                     name="deskripsi_kota"
@@ -202,7 +203,8 @@
                                                             <div
                                                                 class="fv-row
                                                                     mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Nama Negara</label>
+                                                                <label class="fs-6 fw-bold mb-2 required">Nama
+                                                                    Negara</label>
                                                                 <select list="negara" type="select"
                                                                     class="form-control form-control-solid" id="n"
                                                                     name="negara_id">
@@ -218,7 +220,8 @@
                                                             <div
                                                                 class="fv-row
                                                                     mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Kode warna</label>
+                                                                <label class="fs-6 fw-bold mb-2 required">Kode
+                                                                    warna</label>
                                                                 <input type="color"
                                                                     class="form-control form-control-solid" id="4"
                                                                     name="kodewarna_kota"
@@ -227,7 +230,7 @@
                                                             <div
                                                                 class="fv-row
                                                                     mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Gambar</label>
+                                                                <label class="fs-6 fw-bold mb-2 required">Gambar</label>
                                                                 <img class="img-fluid img-preview"
                                                                     src="{{ asset('storage/' . $datas->gambar_kota) }}">
                                                                 <input type="file"
@@ -305,20 +308,23 @@
                     <!--begin::Modal body-->
                     <div class="modal-body py-10 px-lg-17">
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold required mb-2">Nama kota</label>
+                            <label class="fs-6 fw-bold required mb-2 required">Nama kota</label>
                             <input type="text" class="form-control form-control-solid" id="1"
-                                name="nama_kota" required>
+                                name="nama_kota" required placeholder="Masukkan nama kota">
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Deskripsi</label>
+                            <label class="fs-6 fw-bold mb-2 required">Deskripsi</label>
                             <input type="text" class="form-control form-control-solid" id="2"
-                                name="deskripsi_kota" required>
+                                name="deskripsi_kota" required placeholder="Masukkan deskripsi kota">
                         </div>
-                        <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Nama Negara</label>
-                            <select list="negara" type="select" class="form-control form-control-solid" id="3"
-                                name="nama_negara">
-                                <datalist id="negara">
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                <span class="required">Negara</span>
+                            </label>
+                            <select list="negara" class="form-select form-select-solid fw-bolder" id="3"
+                                name="nama_negara" data-control="select2" data-dropdown-parent="#kt_modal_add_kota">
+                                <datalist id="negara" data-placeholder="Select a Country...">
+                                    <option value="" disabled>Silahkan pilih negara</option>
                                     @foreach ($datanegara as $negara)
                                         <option value="{{ $negara->id }}">
                                             {{ $negara->nama_negara }}
@@ -328,12 +334,12 @@
                             </select>
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Kode warna</label>
+                            <label class="fs-6 fw-bold mb-2 required">Kode warna</label>
                             <input type="color" class="form-control form-control-solid" id="3"
                                 name="kodewarna_kota" required>
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Gambar</label>
+                            <label class="fs-6 fw-bold mb-2 required">Gambar</label>
                             <img class="img-fluid img-preview">
                             <input type="file" class="form-control form-control-solid img-input" id="gambar_kota"
                                 name="gambar_kota" onchange="previewImage(event)">
@@ -361,17 +367,13 @@
 
 @section('script')
     <script>
-        function previewImage() {
-            const image = document.querySelector('#4');
+        function previewImage(e) {
+            const imgInput = e.target;
+            const imgPreview = e.target.previousElementSibling;
+            imgPreview.style.display = 'block';
 
-            function previewImage(e) {
-                const imgInput = e.target;
-                const imgPreview = e.target.previousElementSibling;
-                imgPreview.style.display = 'block';
-
-                if (imgInput.files[0]) {
-                    imgPreview.src = URL.createObjectURL(imgInput.files[0]);
-                }
+            if (imgInput.files[0]) {
+                imgPreview.src = URL.createObjectURL(imgInput.files[0]);
             }
         }
     </script>

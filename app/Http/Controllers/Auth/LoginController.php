@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -40,10 +41,11 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect()->route('login'); // Change the redirect route to 'login'
+        return redirect('/login'); // Change the redirect route to 'login'
     }
 }

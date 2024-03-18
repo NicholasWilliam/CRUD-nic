@@ -15,8 +15,8 @@
                             <span class="text-muted mt-1 fw-bold fs-7">Daftar {{ $lokasi }}</span>
                         </h3>
                         <button class="card-toolbar btn btn-sm btn-light btn-active-primary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" data-bs-trigger="hover" title="Click to add a Negara">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#kt_modal_add_negara">
+                            data-bs-placement="top" data-bs-trigger="hover" title="Click to add a Siswa">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#kt_modal_add_siswa">
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                                 <span class="svg-icon svg-icon-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -42,9 +42,12 @@
                                     <tr class="fw-bolder text-muted">
                                         <th class="min-w-50px">No</th>
                                         <th class="min-w-150px">Nama</th>
-                                        <th class="min-w-140px">Deskripsi</th>
-                                        <th class="min-w-120px">Kode Warna</th>
-                                        <th class="min-w-120px">Gambar</th>
+                                        <th class="min-w-100px">Tempat Lahir</th>
+                                        <th class="min-w-140px">Tanggal Lahir</th>
+                                        <th class="min-w-100px">Jenis Kelamin</th>
+                                        <th class="min-w-100px">Negara Asal</th>
+                                        <th class="min-w-100px">Kota Asal</th>
+                                        <th class="min-w-100px">Universitas</th>
                                         <th class="min-w-100px text-end">Aksi</th>
                                     </tr>
                                 </thead>
@@ -61,33 +64,37 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#"
-                                                            class="text-dark fw-bolder text-hover-primary fs-6">{{ $datas->nama_negara }}</a>
+                                                            class="text-dark fw-bolder text-hover-primary fs-6">{{ $datas->nama_siswa }}</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <a href="#"
+                                                            class="text-dark fw-bolder text-hover-primary fs-6">{{ $datas->tempat_lahir }}</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <a href="#"
-                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->deskripsi_negara }}</a>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="d-flex flex-column w-100 me-2">
-                                                    <div class="d-flex flex-stack mb-2">
-                                                        <span
-                                                            class="text-muted me-2 fs-7 fw-bold">{{ $datas->kodewarna_negara }}</span>
-                                                    </div>
-                                                    <div class="progress h-6px w-100">
-                                                        <div class="progress-bar" role="progressbar"
-                                                            style="width: 100%; background-color: {{ $datas->kodewarna_negara }}"
-                                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
+                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->tanggal_lahir }}</a>
                                             </td>
                                             <td>
-                                                {{-- <a href="#"
-                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->gambar_negara }}</a> --}}
-                                                <img src="{{ asset('storage/' . $datas->gambar_negara) }}"
-                                                    style="object-fit: contain; max-width: 200px;" class="img-fluid border"
-                                                    alt="image">
+                                                <a href="#"
+                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->jenis_kelamin }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="#"
+                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->negara->nama_negara }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="#"
+                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->kota->nama_kota }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="#"
+                                                    class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $datas->univ->nama_univ }}</a>
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-end flex-shrink-0">
@@ -95,7 +102,7 @@
                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                                                         data-bs-toggle="modal" data-bs-target="#upd{{ $datas->id }}">
                                                         <!--begin::Svg Icon Edit | path: icons/duotune/art/art005.svg-->
-                                                        <span class="svg-icon svg-icon-3">
+                                                        <span class="svg-icon svg-icon-3 svg-icon-warning">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none">
                                                                 <path opacity="0.3"
@@ -111,12 +118,13 @@
                                                     <a href="#"
                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                         <!--begin::Svg Icon Delete | path: icons/duotune/general/gen027.svg-->
-                                                        <form method="post" action="{{ route('negara.destroy', $datas) }}">
+                                                        <form method="post"
+                                                            action="{{ route('siswa.destroy', $datas->id) }}">
                                                             @csrf
                                                             @method('delete')
-                                                            <span :href="route('negara.destroy', $datas)"
+                                                            <span
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="svg-icon svg-icon-3">
+                                                                class="svg-icon svg-icon-3 svg-icon-danger">
                                                                 {{-- {{ __('delete') }} --}}
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none">
@@ -142,7 +150,7 @@
                                             <!--begin::Modal dialog-->
                                             <div class="modal-dialog modal-dialog-centered mw-650px">
                                                 <form class="form" method="post"
-                                                    action="{{ route('negara.update', $datas->id) }}"
+                                                    action="{{ route('siswa.update', $datas->id) }}"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     @method('put')
@@ -153,12 +161,12 @@
                                                         <div class="modal-header">
                                                             <!--begin::Modal title-->
                                                             <h2 class="fw-bolder" data-kt-calendar="title">
-                                                                Edit Negara
+                                                                Edit Siswa
                                                             </h2>
                                                             <!--end::Modal title-->
                                                             <!--begin::Close-->
                                                             <div class="btn btn-icon btn-sm btn-active-icon-primary"
-                                                                data-bs-dismiss="modal">
+                                                                id="close-modal" data-bs-dismiss="modal">
                                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                                                                 <span class="svg-icon svg-icon-1">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -182,42 +190,98 @@
                                                         <!--begin::Modal body-->
                                                         <div class="modal-body py-10 px-lg-17">
                                                             <div class="fv-row mb-9">
-                                                                <label class="fs-6 fw-bold required mb-2">Nama
-                                                                    negara</label>
+                                                                <label class="fs-6 fw-bold required mb-2 required">Nama
+                                                                    siswa</label>
                                                                 <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    id="upd_nama_negara" name="nama_negara"
-                                                                    value="{{ $datas->nama_negara }}">
+                                                                    class="form-control form-control-solid" id="1"
+                                                                    name="nama_siswa" value="{{ $datas->nama_siswa }}">
                                                             </div>
                                                             <div class="fv-row mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Deskripsi</label>
+                                                                <label class="fs-6 fw-bold required mb-2 required">Tempat
+                                                                    Lahir</label>
                                                                 <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    id="upd_deskripsi_negara" name="deskripsi_negara"
-                                                                    value="{{ $datas->deskripsi_negara }}">
+                                                                    class="form-control form-control-solid" id="2"
+                                                                    name="tempat_lahir"
+                                                                    value="{{ $datas->tempat_lahir }}">
                                                             </div>
-                                                            <div
-                                                                class="fv-row
-                                                            mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Kode warna</label>
-                                                                <input type="color"
+                                                            <div class="fv-row mb-9">
+                                                                <label class="fs-6 fw-bold required mb-2 required">Tanggal
+                                                                    Lahir</label>
+                                                                <input type="text"
+                                                                    class="form-control form-control-solid" id="3"
+                                                                    name="tanggal_lahir"
+                                                                    value="{{ $datas->tanggal_lahir }}">
+                                                            </div>
+                                                            <label class="fs-6 fw-bold required mb-2 required">Jenis
+                                                                Kelamin</label>
+                                                            <select list="jenis_kelamin" type="select"
+                                                                class="form-control form-control-solid" id="jenis_kelamin"
+                                                                name="jenis_kelamin">
+                                                                <datalist id="jenis_kelamin"
+                                                                    placeholder="Pilih jenis kelamin">
+                                                                    <option value="laki-laki"
+                                                                        {{ $datas->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>
+                                                                        Laki-laki</option>
+                                                                    <option value="perempuan"
+                                                                        {{ $datas->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>
+                                                                        Perempuan</option>
+                                                                </datalist>
+                                                            </select>
+                                                            <div class="fv-row mb-9" onclick="focusGetNegara">
+                                                                <label for="22"
+                                                                    class="fs-6 fw-bold mb-2 required">Negara
+                                                                    Asal</label>
+                                                                <select list="negara" type="select"
                                                                     class="form-control form-control-solid"
-                                                                    id="upd_kodewarna_negara" name="kodewarna_negara"
-                                                                    value="{{ $datas->kodewarna_negara }}">
+                                                                    id="negara_select_edit" name="negara_id">
+                                                                    <datalist id="negara">
+                                                                        @foreach ($datanegara as $negara)
+                                                                            <option
+                                                                                value="{{ $negara->id }}"{{ $negara->id == $datas->negara->id ? 'selected' : '' }}>
+                                                                                {{ $negara->nama_negara }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </datalist>
+                                                                </select>
                                                             </div>
                                                             <div
                                                                 class="fv-row
                                                                     mb-9">
-                                                                <label class="fs-6 fw-bold mb-2">Gambar</label>
-                                                                <img class="img-fluid img-preview"
-                                                                    src="{{ asset('storage/' . $datas->gambar_negara) }}">
-                                                                <input type="file"
-                                                                    class="form-control form-control-solid img-input"
-                                                                    id="upd_gambar_negara" name="gambar_negara"
-                                                                    onchange="previewImage(event)">
-                                                                <input type="hidden" name="gambar_lama"
-                                                                    value="{{ $datas->gambar_negara }}">
+                                                                <label for="kota_select_edit{{ $datas->id }}"
+                                                                    class="fs-6 fw-bold mb-2 required">Kota asal</label>
+                                                                <select list="kota" type="select"
+                                                                    id="kota_select_edit"
+                                                                    class="form-control form-control-solid"
+                                                                    name="kota_id">
+                                                                    <datalist id="kota">
+                                                                        @foreach ($datakota as $kota)
+                                                                            <option
+                                                                                value="{{ $kota->id }}"{{ $kota->id == $datas->kota->id ? 'selected' : '' }}>
+                                                                                {{ $kota->nama_kota }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </datalist>
+                                                                </select>
                                                             </div>
+                                                            <div
+                                                                class="fv-row
+                                                                    mb-9">
+                                                                <label for="univ_select_edit{{ $datas->id }}"
+                                                                    class="fs-6 fw-bold mb-2 required">Universitas</label>
+                                                                <select list="univ" type="select"
+                                                                    class="form-control form-control-solid"
+                                                                    name="univ_id">
+                                                                    <datalist id="univ">
+                                                                        @foreach ($datauniv as $univ)
+                                                                            <option
+                                                                                value="{{ $univ->id }}"{{ $univ->id == $datas->univ->id ? 'selected' : '' }}>
+                                                                                {{ $univ->nama_univ }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </datalist>
+                                                                </select>
+                                                            </div>
+
                                                         </div>
                                                         <!--end::Modal body-->
                                                         <!--begin::Modal footer-->
@@ -240,27 +304,20 @@
                                                 <!--end::Form-->
                                             </div>
                                         </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        @endforeach
-                        </tbody>
-                        <!--end::Table body-->
-                        </table>
-                        <!--end::Table-->
                     </div>
-                    <!--end::Table container-->
                 </div>
-                <!--begin::Body-->
             </div>
-            <!--end::Tables Widget 9-->
         </div>
-        <!--end::Col-->
-    </div>
     </div>
 @endsection('container')
 @section('modal-create')
-    <form class="form" method="post" action="{{ route('negara.store') }}" enctype="multipart/form-data">
+    <form class="form" method="post" action="{{ route('siswa.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="modal fade" id="kt_modal_add_negara" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="kt_modal_add_siswa" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
             <div class="modal-dialog modal-dialog-centered mw-650px">
                 <!--begin::Modal content-->
@@ -270,7 +327,7 @@
                     <div class="modal-header">
                         <!--begin::Modal title-->
                         <h2 class="fw-bolder" data-kt-calendar="title">
-                            Tambah Negara
+                            Tambah Siswa
                         </h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
@@ -293,25 +350,62 @@
                     <!--begin::Modal body-->
                     <div class="modal-body py-10 px-lg-17">
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold required mb-2">Nama negara</label>
-                            <input type="text" class="form-control form-control-solid" id="nama_negara"
-                                name="nama_negara" required>
+                            <label class="fs-6 fw-bold required mb-2 required">Nama Siswa</label>
+                            <input type="text" class="form-control form-control-solid" id="1"
+                                name="nama_siswa">
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Deskripsi</label>
-                            <input type="text" class="form-control form-control-solid" id="deskripsi_negara"
-                                name="deskripsi_negara" required>
+                            <label class="fs-6 fw-bold required mb-2 required">Tempat Lahir</label>
+                            <input type="text" class="form-control form-control-solid" id="2"
+                                name="tempat_lahir">
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Kode warna</label>
-                            <input type="color" class="form-control form-control-solid" id="kodewarna_negara"
-                                name="kodewarna_negara" required>
+                            <label class="fs-6 fw-bold required mb-2 required">Tanggal Lahir</label>
+                            <input type="date" class="form-control form-control-solid" id="3"
+                                name="tanggal_lahir">
+                        </div>
+                        <label class="fs-6 fw-bold required mb-2 required">Jenis Kelamin</label>
+                        <select list="jenis_kelamin" type="select" class="form-control form-control-solid"
+                            id="jenis_kelamin" name="jenis_kelamin">
+                            <datalist id="jenis_kelamin">
+                                <option value="laki-laki">Laki-laki</option>
+                                <option value="perempuan">Perempuan</option>
+                            </datalist>
+                        </select>
+                        <div class="fv-row mb-9">
+                            <label for="n" class="fs-6 fw-bold mb-2 required">Negara Asal</label>
+                            <select list="negara" type="select" class="form-control form-control-solid"
+                                id="negara_select" name="negara_id">
+                                <datalist id="negara">
+                                    <option value="" disabled selected style="color: rgba(0, 0, 0, 0);">
+                                        Silahkan pilih negara
+                                    </option>
+                                    @foreach ($datanegara as $negara)
+                                        <option value="{{ $negara->id }}">
+                                            {{ $negara->nama_negara }}
+                                        </option>
+                                    @endforeach
+                                </datalist>
+                            </select>
                         </div>
                         <div class="fv-row mb-9">
-                            <label class="fs-6 fw-bold mb-2">Gambar</label>
-                            <img class="img-fluid img-preview">
-                            <input type="file" class="form-control form-control-solid img-input" id="gambar_negara"
-                                name="gambar_negara" onchange="previewImage(event)">
+                            <label for="kota_select" class="fs-6 fw-bold mb-2 required">Kota Asal</label>
+                            <select list="negara" type="select" class="form-control form-control-solid"
+                                id="kota_select" name="kota_id">
+                            </select>
+                        </div>
+                        <div class="fv-row mb-9">
+                            <label class="fs-6 fw-bold mb-2 required">Universitas</label>
+                            <select list="univ" type="select" class="form-control form-control-solid"
+                                id="univ_select" name="univ_id">
+                                <datalist id="univ">
+                                    @foreach ($datauniv as $univ)
+                                        <option value="{{ $univ->id }}">
+                                            {{ $univ->nama_univ }}
+                                        </option>
+                                    @endforeach
+                                </datalist>
+                            </select>
                         </div>
                     </div>
                     <!--end::Modal body-->
@@ -326,38 +420,91 @@
                         <button type="submit" id="submit" class="btn btn-primary">Submit</button>
                         <!--end::Button-->
                     </div>
-                    <!--end::Modal footer-->
+                </div>
+            </div>
+        </div>
+        @if (session('alert'))
+            <script>
+                Swal.fire({
+                    title: '{{ session('alert')['title'] }}',
+                    text: '{{ session('alert')['text'] }}',
+                    type: '{{ session('alert')['type'] }}'
+                });
+            </script>
+        @endif
+        <!--end::Modal footer-->
     </form>
     <!--end::Form-->
-    </div>
-    </div>
-    </div>
-
-    @if ($errors->count())
-        <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
-            @foreach ($errors->getBag('default')->messages() as $key_err => $err)
-                <ul>
-                    <h5>{{ $key_err }}</h5>
-                    @foreach ($err as $e)
-                        <p>{{ $e }}</p>
-                    @endforeach
-                </ul>
-            @endforeach
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 @endsection('modal-create')
 
 @section('script')
     <script>
-        function previewImage(e) {
-            const imgInput = e.target;
-            const imgPreview = e.target.previousElementSibling;
-            imgPreview.style.display = 'block';
+        console.log('vanila javsascript best');
+        const select_negara_create = document.querySelector('#negara_select');
+        const kota_select_create = document.querySelector('#kota_select');
+        const kota_select_edits = document.querySelectorAll('#kota_select_edit');
+        const close_modals = document.querySelectorAll('#close-modal');
+        const select_negara_edits = document.querySelectorAll('#negara_select_edit');
+        let previousOption = {
+            negara: null
+        };
 
-            if (imgInput.files[0]) {
-                imgPreview.src = URL.createObjectURL(imgInput.files[0]);
-            }
+        async function changeOptionKota(e, whatForm, index = 0) {
+            const id = e.target.options[e.target.selectedIndex].value;
+            console.log(id);
+            fetch('http://127.0.0.1:8000/get-kota-by-negara/' + id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((res) => {
+                    console.log(res);
+
+                    if (res.kota.length === 0) {
+                        e.target.options[previousOption.negara];
+                    } else {
+                        res.kota.map((kota) => {
+                            if (whatForm === 'create') {
+                                kota_select_create.options.length = 0;
+                                const option = document.createElement('option');
+                                option.value = kota.id;
+                                option.text = kota.nama_kota;
+                                kota_select_create.add(option);
+                            } else if (whatForm === 'edit') {
+                                kota_select_edits[index].options.length = 0;
+                                const option = document.createElement('option');
+                                option.value = kota.id;
+                                option.text = kota.nama_kota;
+                                kota_select_edits[index].add(option);
+                            }
+                        })
+                    }
+                })
         }
+
+        close_modals.forEach((modal, index) => {
+            modal.addEventListener('click', function() {
+                console.log(previousOption);
+                if (previousOption.negara !== null) {
+                    select_negara_edits[index].options[previousOption.negara];
+                } else {
+                    return true;
+                }
+            })
+        })
+
+        select_negara_edits.forEach((sele, index) => {
+            sele.addEventListener('change', (e) => {
+                previousOption = {
+                    negara: e.target.selectedIndex
+                };
+                changeOptionKota(e, 'edit', index);
+            });
+        })
+        select_negara_create.addEventListener('change', (e) => {
+            previousOption = {
+                negara: e.target.selectedIndex
+            };
+            changeOptionKota(e, 'create');
+        });
     </script>
 @endsection('script')

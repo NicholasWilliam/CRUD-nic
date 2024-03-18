@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -19,7 +19,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('siswa', [
+        return view('master.siswa', [
             "title" => 'siswa',
             "lokasi" => 'Siswa',
             "data" => siswa::all(),
@@ -67,14 +67,7 @@ class SiswaController extends Controller
 
         siswa::create($validatedData);
 
-        return redirect('/siswa')->with(
-            'alert',
-            [
-                'title' => 'success',
-                'text' => 'Sukses! Seorang siswa telah ditambahkan',
-                'type' => 'success',
-            ]
-        );
+        return redirect('/siswa')->with('success', 'Seorang siswa telah ditambahkan');
     }
 
     /**
@@ -129,6 +122,6 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         siswa::destroy($id);
-        return redirect('/siswa');
+        return redirect('/siswa')->with('delete', 'Seorang siswa telah dihapus');
     }
-} -->
+}

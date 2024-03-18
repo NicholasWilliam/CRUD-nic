@@ -20,11 +20,9 @@
         <!--begin::Actions-->
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <div class="d-flex align-items-center py-1">
-                <!--begin::Button-->
-                <a href="/login" class="btn btn-sm btn-danger" id="1">Log out</a>
-                <!--end::Button-->
-            </div>
+            <button class="btn btn-danger" type="submit">
+                Log out
+            </button>
         </form>
         <!--end::Actions-->
     </div>

@@ -8,6 +8,7 @@ use App\Models\negara;
 use App\Models\kota;
 use App\Models\univ;
 use App\Models\siswa;
+use App\Models\user;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,13 +28,43 @@ class DatabaseSeeder extends Seeder
             'nama_negara' => 'Indonesia',
             'deskripsi_negara' => 'Indonesia merupakan bagian dari ASEAN',
             'kodewarna_negara' => '#FF0000',
-            'gambar_negara' => '6gs1NfzBODo6SzogrZUFrkJ5aE3izVBO5RB3NlEF.png'
+            'gambar_negara' => 'indonesia.png'
         ]);
         negara::create([
             'nama_negara' => 'Malaysia',
             'deskripsi_negara' => 'Malaysia merupakan bagian dari ASEAN',
             'kodewarna_negara' => '#0032AO',
-            'gambar_negara' => 'storage/Malaysia.png'
+            'gambar_negara' => 'indonesia.png'
+        ]);
+        negara::create([
+            'nama_negara' => 'Vietanam',
+            'deskripsi_negara' => 'Vietanam merupakan bagian dari ASEAN',
+            'kodewarna_negara' => '#0072A0',
+            'gambar_negara' => 'indonesia.png'
+        ]);
+        negara::create([
+            'nama_negara' => 'Laos',
+            'deskripsi_negara' => 'Laos merupakan bagian dari ASEAN',
+            'kodewarna_negara' => '#0048AO',
+            'gambar_negara' => 'indonesia.png'
+        ]);
+        negara::create([
+            'nama_negara' => 'Filipina',
+            'deskripsi_negara' => 'Malaysia merupakan bagian dari ASEAN',
+            'kodewarna_negara' => '#007749',
+            'gambar_negara' => 'indonesia.png'
+        ]);
+        negara::create([
+            'nama_negara' => 'Brunei Darussalam',
+            'deskripsi_negara' => 'Brunei Darussalam merupakan bagian dari ASEAN',
+            'kodewarna_negara' => '#770073',
+            'gambar_negara' => 'indonesia.png'
+        ]);
+        negara::create([
+            'nama_negara' => 'Singapore',
+            'deskripsi_negara' => 'Singapore merupakan bagian dari ASEAN',
+            'kodewarna_negara' => '#775500',
+            'gambar_negara' => 'indonesia.png'
         ]);
 
         kota::create([
@@ -41,14 +72,14 @@ class DatabaseSeeder extends Seeder
             'nama_kota' => 'Pontianak',
             'deskripsi_kota' => 'Pontianak merupakan salah satu kota di Indonesia',
             'kodewarna_kota' => '#00ff4c',
-            'gambar_kota' => 'gambarPTK'
+            'gambar_kota' => 'indonesia.png'
         ]);
         kota::create([
             'negara_id' => 2,
             'nama_kota' => 'Kuala Lumpur',
             'deskripsi_kota' => 'Pontianak merupakan salah satu kota di Indonesia',
             'kodewarna_kota' => '#FFD100',
-            'gambar_kota' => 'gambarKL'
+            'gambar_kota' => 'indonesia.png'
         ]);
 
         univ::create([

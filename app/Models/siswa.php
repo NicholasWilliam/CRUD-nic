@@ -14,18 +14,18 @@ class siswa extends Model
 
     protected $guarded = ['id'];
 
-    // public function negara()
-    // {
-    //     return $this->belongsTo(negara::class);
-    // }
+    public function negara()
+    {
+        return $this->belongsTo(negara::class);
+    }
 
-    // public function kota()
-    // {
-    //     return $this->belongsTo(kota::class);
-    // }
+    public function kota()
+    {
+        return $this->belongsTo(kota::class);
+    }
 
-    // public function univ()
-    // {
-    //     return $this->belongsTo(univ::class);
-    // }
+    public function univ()
+    {
+        return $this->belongsTo(univ::class);
+    }
 }

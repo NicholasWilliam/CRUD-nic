@@ -18,7 +18,7 @@ class KotaController extends Controller
      */
     public function index()
     {
-        return view('kota', [
+        return view('master.kota', [
             "title" => 'kota',
             "data" => kota::all(),
             "lokasi" => 'Kota',
@@ -125,7 +125,22 @@ class KotaController extends Controller
      */
     public function destroy($id)
     {
-        Kota::destroy($id);
-        return redirect('/kota')->with('success', 'Sebuah kota telah dihapus');
+        $kota = kota::find($id);
+        $kota->universitas()->whereHas('kota', function ($query) use ($kota) {
+            $query->where('id', $kota->id);
+        })->delete();
+
+        $kota->siswa()->whereHas('kota', function ($query) use ($kota) {
+            $query->where('id', $kota->id);
+        })->delete();
+
+        $kota->delete();
+        return redirect('/kota')->with('delete', 'Sebuah kota berhasil dihapus');
+    }
+
+    public function getByNegara($negara_id)
+    {
+        $kota = Kota::where('negara_id', $negara_id)->get();
+        return response()->json($kota);
     }
 }

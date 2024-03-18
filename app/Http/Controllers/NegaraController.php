@@ -15,7 +15,7 @@ class NegaraController extends Controller
      */
     public function index()
     {
-        return view('negara', [
+        return view('master.negara', [
             "title" => 'negara',
             "data" => negara::all(),
             "lokasi" => 'Negara',
@@ -109,7 +109,22 @@ class NegaraController extends Controller
      */
     public function destroy(negara $negara)
     {
-        $negara->delete();
-        return redirect('/negara')->with('success', 'Sebuah negara telah dihapus');
+        $destroy = negara::findOrFail($negara->id);
+        storage::delete($destroy->gambar_negara);
+
+        $negara->kota()->each(function ($kota) {
+            $kota->delete();
+        });
+
+        $negara->universitas()->each(function ($universitas) {
+            $universitas->delete();
+        });
+
+        $negara->siswa()->each(function ($siswa) {
+            $siswa->delete();
+        });
+
+        negara::destroy($negara->id);
+        return redirect('/negara')->with('delete', 'Sebuah negara telah dihapus');
     }
 }

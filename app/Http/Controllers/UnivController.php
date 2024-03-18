@@ -107,9 +107,12 @@ class UnivController extends Controller
      */
     public function destroy($id)
     {
+        $universitas = univ::find($id);
+        $universitas->siswa()->each(function ($siswa) {
+            $siswa->delete();
+        });
         univ::destroy($id);
-
-        return redirect('/univ');
+        return redirect('/univ')->with('delete', 'Sebuah univ telah dihapus');
     }
 
     public function getKotaByNegara($negara_id)

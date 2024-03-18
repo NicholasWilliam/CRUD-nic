@@ -29,4 +29,9 @@ class kota extends Model
     {
         return $this->hasMany(siswa::class);
     }
+
+    public function universitas()
+    {
+        return $this->hasMany(univ::class);
+    }
 }
